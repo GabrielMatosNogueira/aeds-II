@@ -46,7 +46,7 @@ public class Bee_1252
                     }
                     System.out.println(array[i]);
                 }
-            }while(n!=0 && mod!=0);
-        }
+            }
+        } while(n!=0 && mod!=0);
     }
 }
