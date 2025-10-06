@@ -1,55 +1,52 @@
 import java.util.Scanner;
 import java.util.Random;
-public class Quicksort 
-{
+
+public class Quicksort {
     public static void main(String[] args) {
         selectorMenuEntrance();
     }
 
-    public static int[] selectorArrayEntrance(Scanner sc, int[] array,int size)
-    {
+    public static int[] selectorArrayEntrance(Scanner sc, int[] array, int size) {
         Random rand = new Random();
         boolean randArary = false;
         System.out.println("\nPreencher array com numeros aleatorios?\ntrue\nfalse");
         randArary = sc.nextBoolean();
+        System.out.println("");
 
-        if(randArary)
-        {
-            for(int i=0; i < array.length; i = i + 1)
-            {
+        if (randArary) {
+            for (int i = 0; i < array.length; i = i + 1) {
                 array[i] = rand.nextInt(101);
             }
-        }
-        else
-        {
+        } else {
             System.out.println("Digite os elementos (Recomenda-se arquivo pub.in):");
-            for(int i=0; i < array.length; i = i + 1)
-            {
+            for (int i = 0; i < array.length; i = i + 1) {
                 array[i] = sc.nextInt();
             }
         }
         return array;
     }
+
     public static void selectorMenuEntrance() {
         Scanner sc = new Scanner(System.in);
+        boolean stop = false;
         int arraySize = 0;
         int opcaoArray = -1;
         int opcaoPivo = -1;
 
         System.out.println("MENU DE OPCOES\n");
 
-        do 
-        {
-            System.out.println("0 - Sair");
+        do {
+            opcaoArray = 0;
+            opcaoPivo = 0;
             System.out.println("100 - Array de 100");
             System.out.println("1000 - Array de 1.000");
             System.out.println("10000 - Array de 10.000");
             System.out.print("Escolha uma opcao: ");
             opcaoArray = sc.nextInt();
+            System.out.println("");
             int[] array = new int[opcaoArray];
 
-            switch (opcaoArray) 
-            {
+            switch (opcaoArray) {
                 case 0:
                     System.out.println("Saindo ...");
                     break;
@@ -67,6 +64,7 @@ public class Quicksort
                     break;
             }
 
+            System.out.println("Escolha um pivo:");
             System.out.println("1 - Primeiro elemento");
             System.out.println("2 - Ultimo elemento");
             System.out.println("3 - Pivo aleatorio");
@@ -77,60 +75,76 @@ public class Quicksort
             switch (opcaoPivo) {
                 case 1:
                     quickSortFirstPivot(array, 0, array.length - 1);
+                    System.out.println("\nArray ordenado (primeiro elemento como pivo):");
+                    printArray(array);
+                    System.out.println();
                     break;
 
                 case 2:
                     quickSortLastPivot(array, 0, array.length - 1);
+                    System.out.println("\nArray ordenado (último elemento como pivo):");
+                    printArray(array);
+                    System.out.println();
                     break;
 
                 case 3:
                     quickSortRandomPivot(array, 0, array.length - 1);
+                    System.out.println("\nArray ordenado (pivo aleatório):");
+                    printArray(array);
+                    System.out.println();
                     break;
 
                 case 4:
                     quickSortMedianOfThree(array, 0, array.length - 1);
+                    System.out.println("\nArray ordenado (mediana de tres):");
+                    printArray(array);
+                    System.out.println();
                     break;
             }
+            System.out.println("Deseja encerrar o programa?");
+            System.out.println("true\nfalse");
+            stop = sc.nextBoolean();
             
-        } while (opcaoArray != 0);
+        } while (stop != true);
 
         sc.close();
     }
-    
+
     public static void quickSortFirstPivot(int[] array, int left, int right) {
         if (left < right) {
-            int i = left + 1;
+            int i = left;
             int j = right;
-            int pivo = array[left]; // pivô é o primeiro elemento
+            int pivo = array[left];
 
             while (i <= j) {
-                // Avança i até achar elemento maior que o pivô
-                while (i <= right && array[i] <= pivo) {
+                // CORREÇÃO: Garante que 'i' não ultrapasse 'right'
+                while (i <= right && array[i] < pivo) {
                     i++;
                 }
-                // Recua j até achar elemento menor que o pivô
+                // CORREÇÃO: Garante que 'j' não ultrapasse 'left'
                 while (j >= left && array[j] > pivo) {
                     j--;
                 }
-                // Se i ainda não passou de j, troca
-                if (i < j) {
-                    int temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
+
+                if (i <= j) {
+                    // Troca os elementos e avança os ponteiros
+                    swap(array, i, j);
+                    i++;
+                    j--;
                 }
             }
 
-            // Coloca o pivô na posição correta
-            int temp = array[left];
-            array[left] = array[j];
-            array[j] = temp;
-
-            // Chama recursivamente para as duas metades
-            quickSortFirstPivot(array, left, j - 1);
-            quickSortFirstPivot(array, j + 1, right);
+            // Chamadas recursivas
+            // A verificação 'j > left' evita recursão infinita se a partição for desbalanceada
+            if (left < j) {
+                quickSortFirstPivot(array, left, j);
+            }
+            // A verificação 'i < right' evita recursão infinita
+            if (i < right) {
+                quickSortFirstPivot(array, i, right);
+            }
         }
     }
-
 
     public static void quickSortLastPivot(int[] array, int left, int right) {
         if (left < right) {
@@ -159,7 +173,6 @@ public class Quicksort
             quickSortLastPivot(array, p + 1, right);
         }
     }
-
 
     public static void quickSortRandomPivot(int[] array, int left, int right) {
         if (left < right) {
@@ -199,36 +212,46 @@ public class Quicksort
     }
 
     public static void quickSortMedianOfThree(int[] array, int left, int right) {
-        if (left < right) {
-            // Escolhe o pivô pela mediana de três
-            int mid = (left + right) / 2;
+        if (left + 1 >= right) {
+            if (left < right && array[left] > array[right]) {
+                swap(array, left, right);
+            }
+            return;
+        }
 
-            // Ordena os três valores (left, mid, right)
-            if (array[left] > array[mid]) swap(array, left, mid);
-            if (array[left] > array[right]) swap(array, left, right);
-            if (array[mid] > array[right]) swap(array, mid, right);
+        int mid = left + (right - left) / 2;
 
-            // Coloca o pivô (a mediana) no penúltimo lugar
-            swap(array, mid, right - 1);
-            int pivo = array[right - 1];
+        if (array[left] > array[mid]) swap(array, left, mid);
+        if (array[left] > array[right]) swap(array, left, right);
+        if (array[mid] > array[right]) swap(array, mid, right);
 
-            // Particiona o vetor
-            int i = left;
-            int j = right - 1;
-            while (true) {
-                while (array[++i] < pivo) {}
-                while (array[--j] > pivo) {}
-                if (i >= j) break;
+        swap(array, mid, right - 1);
+        int pivo = array[right - 1];
+
+        int i = left;
+        int j = right - 1;
+
+        // ALTERAÇÃO: O laço 'while(true)' com 'break' foi substituído
+        // por um laço com a condição de parada explícita (i < j).
+        while (i < j) {
+            // Avança 'i' enquanto os elementos forem menores que o pivô
+            while (i < right && array[++i] < pivo) {}
+
+            // Recua 'j' enquanto os elementos forem maiores que o pivô
+            while (j > left && array[--j] > pivo) {}
+
+            // Se os ponteiros não se cruzaram, troca os elementos
+            if (i < j) {
                 swap(array, i, j);
             }
-
-            // Coloca o pivô na posição correta
-            swap(array, i, right - 1);
-
-            // Chamada recursiva para as duas metades
-            quickSortMedianOfThree(array, left, i - 1);
-            quickSortMedianOfThree(array, i + 1, right);
         }
+
+        // Restaura o pivô para sua posição final correta
+        swap(array, i, right - 1);
+
+        // Chamada recursiva para as duas metades
+        quickSortMedianOfThree(array, left, i - 1);
+        quickSortMedianOfThree(array, i + 1, right);
     }
 
     // Função auxiliar de troca
@@ -238,11 +261,9 @@ public class Quicksort
         array[j] = temp;
     }
 
-    public static void printArray(int[] array)
-    {
-        for(int i=0; i< array.length; i=i+1)
-        {
-            System.out.print(array[i] + " ");
+    public static void printArray(int[] array) {
+        for (int i = 0; i < array.length; i = i + 1) {
+            System.out.print("[ " + array[i] + " ]" + " ");
         }
     }
 }
