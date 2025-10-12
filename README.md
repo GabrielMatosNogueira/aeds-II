@@ -1,23 +1,23 @@
-# Algoritmos e Estruturas de Dados II
+# Algorithms and Data Structures II
 
 | | |
 | :--- | :--- |
-| **Instituição** | Pontifícia Universidade Católica de Minas Gerais (PUC Minas) |
+| **Institution** | Pontifical Catholic University of Minas Gerais (PUC Minas) |
 | **Professor** | Naísses Zoia Lima |
-| **Semestre** | 2º Semestre de 2025 |
+| **Semester** | 2nd Semester, 2025 |
 
 ---
 
-## Ferramentas da Disciplina
+## Course Tools
 
-- **Git:** Controle de versão para gerenciar código.  
-- **GitHub:** Plataforma para armazenar e compartilhar repositórios Git.  
-- **C:** Linguagem imperativa e estruturada de médio nível.  
-- **Java:** Linguagem orientada a objetos de alto nível.
+- **Git:** Version control system for managing code.  
+- **GitHub:** Platform to store and share Git repositories.  
+- **C:** Mid-level imperative and structured programming language.  
+- **Java:** High-level object-oriented programming language.
 
 ---
 
-## Bibliografia Recomendada
+## Recommended Bibliography
 
-- **KNUTH, Donald E.; GRAHAM, Ronald L.; PATASHNIK, Oren.** Concrete Mathematics: A Foundation for Computer Science. 2. ed. Addison-Wesley, 1994.  
-- **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** Algoritmos: Teoria e Prática. 3. ed. Rio de Janeiro: Elsevier, 2012.
+- **KNUTH, Donald E.; GRAHAM, Ronald L.; PATASHNIK, Oren.** *Concrete Mathematics: A Foundation for Computer Science.* 2nd ed. Addison-Wesley, 1994.  
+- **CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford.** *Algorithms: Theory and Practice.* 3rd ed. Rio de Janeiro: Elsevier, 2012.
