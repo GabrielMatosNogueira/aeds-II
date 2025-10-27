@@ -131,7 +131,7 @@ class ArvoreBinaria {
         caminharPre(raiz);
     }
 
-	private void caminharPre(No i) {
+	private void caminharPre(No i){
 		if (i != null) {
 			System.out.print(i.elemento + " ");
 			caminharPre(i.esq);
@@ -139,7 +139,11 @@ class ArvoreBinaria {
 		}
 	}
 
-    public void caminharPos() {
+    public void caminharPos(){
+
+    }
+
+    public void caminharPos(No i){
 
     }
 
